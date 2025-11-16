@@ -28,6 +28,7 @@ public class SocialNetworks {
 
     }
 
+    // we're assuming the graph is connected
     class Graph<T> {
         // Agonizing
         ArrayList<Pair<T,ArrayList<Edge<T>>>> nodesAndEdges;
@@ -36,9 +37,21 @@ public class SocialNetworks {
             nodesAndEdges = new ArrayList<Pair<T,ArrayList<Edge<T>>>>();
         }
 
+        // adds an edge between vertices v1 and v2
         void add(T v1, T v2) {
-            
+            if(!isNode(v1)) {
+                ArrayList<Edge<T>> a = new ArrayList<>();
+                Pair<T, ArrayList<Edge<T>>> p = new Pair<>(v1, a);
+                nodesAndEdges.add(p);
+            }
+            if(!isNode(v2)) {
+                ArrayList<Edge<T>> a = new ArrayList<>();
+                Pair<T, ArrayList<Edge<T>>> p = new Pair<>(v2, a);
+                nodesAndEdges.add(p);
+            }
+
             Edge<T> newEdge = new Edge<T>(v1, v2);
+            Edge<T> newEdge2 = new Edge<T>(v2, v1);
 
             for(int i=0; i<nodesAndEdges.size(); i++) {
                 Pair<T, ArrayList<Edge<T>>> node = nodesAndEdges.get(i);
@@ -54,12 +67,25 @@ public class SocialNetworks {
                         node.snd.add(newEdge);
                     }
                 }
+                if(node.fst.equals(v2)) {
+                    boolean inList = false;
+                    for(int j=0; j<node.snd.size(); j++) {
+                        Edge<T> edge = node.snd.get(j);
+                        if(edge.equals(newEdge2)) {
+                            inList = true;
+                        }
+                    }
+                    if(!inList) {
+                        node.snd.add(newEdge2);
+                    }
+                }
             }
 
-            ArrayList<Edge<T>>newEdgeList = new ArrayList<>();
-            newEdgeList.add(newEdge);
 
-            nodesAndEdges.add(new Pair<T,ArrayList<Edge<T>>>(v1,newEdgeList));
+            // ArrayList<Edge<T>>newEdgeList = new ArrayList<>();
+            // newEdgeList.add(newEdge);
+
+            // nodesAndEdges.add(new Pair<T,ArrayList<Edge<T>>>(v1,newEdgeList));
             
         }
 
@@ -95,6 +121,7 @@ public class SocialNetworks {
     public static void main(String[] args) {
         SocialNetworks soc = new SocialNetworks();
         Graph<Integer> g = soc.new Graph<>();
+        
         
         
     }
