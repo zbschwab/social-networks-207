@@ -124,17 +124,21 @@ public class SocialNetworks {
     public static void main(String[] args) throws FileNotFoundException {
         SocialNetworks soc = new SocialNetworks();
         Graph<Integer> g = soc.new Graph<>();
-        String filePath = "facebook_combined.txt";
+        String filePath = "0.edges";
         Scanner s = new Scanner(new File(filePath));
         
         while (s.hasNextLine()) {
             String line = s.nextLine();
             String[] row_data = line.split(" ");
 
-            Edge<Integer> e = new Edge<>(Integer.parseInt(row_data[0]), Integer.parseInt(row_data[1]));
-            g.add(null, null);
+            // Edge<Integer> e = new Edge<>(Integer.parseInt(row_data[0]), Integer.parseInt(row_data[1]));
+            g.add(Integer.parseInt(row_data[0]), Integer.parseInt(row_data[1]));
 
         }
+        ArrayList<Edge<Integer>> l = new ArrayList<>();
+        l = (ArrayList<Edge<Integer>>) g.getEdges();
+        System.out.println(l.toString());
+        s.close();
     }
 
 }
