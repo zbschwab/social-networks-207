@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class SocialNetworks {
 
@@ -118,12 +121,20 @@ public class SocialNetworks {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         SocialNetworks soc = new SocialNetworks();
         Graph<Integer> g = soc.new Graph<>();
+        String filePath = "facebook_combined.txt";
+        Scanner s = new Scanner(new File(filePath));
         
-        
-        
+        while (s.hasNextLine()) {
+            String line = s.nextLine();
+            String[] row_data = line.split(" ");
+
+            Edge<Integer> e = new Edge<>(Integer.parseInt(row_data[0]), Integer.parseInt(row_data[1]));
+            g.add(null, null);
+
+        }
     }
 
 }
